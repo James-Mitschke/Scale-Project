@@ -3,5 +3,6 @@
     public interface IDataStorage
     {
         public float GetScreenSize();
+        public float GetScreenRectWidth();
     }
 }

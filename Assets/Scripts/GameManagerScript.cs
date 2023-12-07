@@ -68,7 +68,7 @@ public class GameManagerScript : MonoBehaviour
             }
         }
 
-        _dataStorage = new DataStorage(sceneCamera.orthographicSize);
+        _dataStorage = new DataStorage(sceneCamera.orthographicSize, sceneCamera.rect.width);
 
         Instance = this;
     }

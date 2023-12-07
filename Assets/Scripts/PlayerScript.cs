@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     private const float cnst_moveSpeed = 10.0f;
     private IDataStorage _dataStorage;
     private float screenSize;
+    private float screenRectWidth;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         screenSize = _dataStorage.GetScreenSize();
+        screenRectWidth = _dataStorage.GetScreenRectWidth();
     }
 
     // Update is called once per frame
@@ -40,12 +42,12 @@ public class PlayerScript : MonoBehaviour
             this.transform.Translate(new Vector3(1 * cnst_moveSpeed * Time.deltaTime, 0));
         }
 
-        if (Input.GetKey(KeyCode.W) && this.transform.position.y + cnst_moveSpeed / 2 < (screenSize / 0.8) - 0.5f)
+        if (Input.GetKey(KeyCode.W) && this.transform.position.y + cnst_moveSpeed / 2 < (screenSize / (2 * screenRectWidth)) - 0.5f)
         {
             this.transform.Translate(new Vector3(0, 1 * cnst_moveSpeed * Time.deltaTime));
         }
 
-        if (Input.GetKey(KeyCode.S) && this.transform.position.y - cnst_moveSpeed / 2 > -(screenSize / 0.8) + 0.5f)
+        if (Input.GetKey(KeyCode.S) && this.transform.position.y - cnst_moveSpeed / 2 > -(screenSize / (2 * screenRectWidth)) + 0.5f)
         {
             this.transform.Translate(new Vector3(0, -1 * cnst_moveSpeed * Time.deltaTime));
         }
