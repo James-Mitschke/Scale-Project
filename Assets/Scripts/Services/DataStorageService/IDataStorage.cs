@@ -4,5 +4,6 @@
     {
         public float GetScreenSize();
         public float GetScreenRectWidth();
+        public int GetPlayerMaxLength();
     }
 }

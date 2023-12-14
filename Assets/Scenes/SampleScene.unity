@@ -130,6 +130,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].x
+      value: -0.3375
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].x
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[8].x
+      value: 0.28125
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[12].x
+      value: 0.375
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[12].y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 821871322, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: uniquePlayerFishParts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 821871322, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: uniquePlayerFishParts.Array.data[0]
+      value: 
+      objectReference: {fileID: 5649689298516850814, guid: 20604b1f5832b364a9686c4a59bfdfd3, type: 3}
     - target: {fileID: 821871326, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
       propertyPath: m_Constraints
       value: 4
@@ -184,6 +216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -4250028942749362745, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
 --- !u!1 &185513121
 GameObject:
@@ -421,6 +454,7 @@ MonoBehaviour:
   maxDelayBetweenSpawningPickups: 20
   minNumberOfObstacles: 1
   maxNumberOfObstacles: 3
+  playerMaxLength: 100
   pickupWeights:
   - 0.73
   - 0.27

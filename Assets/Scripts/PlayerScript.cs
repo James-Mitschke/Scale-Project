@@ -1,6 +1,7 @@
 using Assets.Scripts.Classes;
 using Assets.Scripts.Services.DataStorageService;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
@@ -9,10 +10,15 @@ public class PlayerScript : MonoBehaviour
     private IDataStorage _dataStorage;
     private float screenSize;
     private float screenRectWidth;
+    private List<GameObject> playerSegments;
+    private int playerMaxLength;
+    public List<GameObject> uniquePlayerFishParts;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerSegments = new List<GameObject>();
+
         _dataStorage = GameManagerScript.Instance._dataStorage;
 
         if (_dataStorage == null)
@@ -22,6 +28,14 @@ public class PlayerScript : MonoBehaviour
 
         screenSize = _dataStorage.GetScreenSize();
         screenRectWidth = _dataStorage.GetScreenRectWidth();
+        playerMaxLength = _dataStorage.GetPlayerMaxLength();
+
+        // Test for instantiating body parts for the fish player, works nicely but will of course need work
+        /*Vector3 spawnPos = this.transform.position - new Vector3(0, this.transform.localScale.y, 0);
+        playerSegments.Add(Instantiate(uniquePlayerFishParts[0], spawnPos, new Quaternion()));
+        var test = playerSegments[0].GetComponent<RelativeJoint2D>();
+        test.connectedBody = this.gameObject.GetComponent<Rigidbody2D>();
+        test.autoConfigureOffset = false;*/
     }
 
     // Update is called once per frame
@@ -62,6 +76,29 @@ public class PlayerScript : MonoBehaviour
         else if (collision.gameObject.tag.ToLower() == GameTagsEnum.ReverseDrag.ToString().ToLower())
         {
             this.transform.Translate(new Vector3(0, 1 * cnst_moveSpeed * 0.5f * Time.deltaTime));
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.ToLower() == GameTagsEnum.Obstacle.ToString().ToLower())
+        {
+            GameManagerScript.Instance.GameOver(EndingTypeEnum.Default);
+        }
+        else if (collision.gameObject.tag.ToLower() == GameTagsEnum.Hook.ToString().ToLower())
+        {
+            GameManagerScript.Instance.GameOver(EndingTypeEnum.Weight);
+        }
+        else if (collision.gameObject.tag.ToLower() == GameTagsEnum.Tail.ToString().ToLower())
+        {
+            if (playerSegments.Count >= playerMaxLength)
+            {
+                GameManagerScript.Instance.GameOver(EndingTypeEnum.Secret);
+            }
+            else
+            {
+                GameManagerScript.Instance.GameOver(EndingTypeEnum.Ouroborous);
+            }
         }
     }
 }

@@ -25,6 +25,7 @@ public class GameManagerScript : MonoBehaviour
     private List<ObjectToSpawn> pickupsToSpawn;
     private int startDelay = 3;
     private bool delayingStart = true;
+    private bool spawningObjects = true;
     private DateTime startTime;
 
     public List<GameObject> obstacles;
@@ -36,6 +37,7 @@ public class GameManagerScript : MonoBehaviour
     public int maxDelayBetweenSpawningPickups = 20;
     public int minNumberOfObstacles = 1;
     public int maxNumberOfObstacles = 3;
+    public int playerMaxLength = 100;
     public List<float> pickupWeights;
 
     // Start is called before the first frame update
@@ -68,7 +70,7 @@ public class GameManagerScript : MonoBehaviour
             }
         }
 
-        _dataStorage = new DataStorage(sceneCamera.orthographicSize, sceneCamera.rect.width);
+        _dataStorage = new DataStorage(sceneCamera.orthographicSize, sceneCamera.rect.width, playerMaxLength);
 
         Instance = this;
     }
@@ -76,7 +78,7 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!delayingStart)
+        if (!delayingStart && spawningObjects)
         {
             GenerateObstacles();
             GeneratePickups();
@@ -153,13 +155,6 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Starts a game over event which will freeze the active gameplay and bring up a menu containing the player's score from the current round of play and a leaderboard alongside menu controls.
-    /// </summary>
-    public void GameOver()
-    {
-        throw new NotImplementedException();
-    }
 
     /// <summary>
     /// Saves the player's score from the current round of play to the leaderboard.
@@ -193,6 +188,58 @@ public class GameManagerScript : MonoBehaviour
     /// Returns the player to the main menu.
     /// </summary>
     public void ReturnToMainMenu()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Starts a game over event which will freeze the active gameplay and bring up a menu containing the player's score from the current round of play and a leaderboard alongside menu controls.
+    /// </summary>
+    public void GameOver(EndingTypeEnum ending = EndingTypeEnum.Default)
+    {
+        Time.timeScale = 0;
+        spawningObjects = false;
+
+        switch (ending)
+        {
+            case EndingTypeEnum.Weight:
+                TriggerWeightEnding();
+                break;
+
+            case EndingTypeEnum.Ouroborous:
+                TriggerOuroborousEnding();
+                break;
+
+            case EndingTypeEnum.Secret:
+                TriggerSecretEnding();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Triggers the weight related ending if the player collides with a hook.
+    /// </summary>
+    private void TriggerWeightEnding()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Triggers the Ouroborous ending if the player collides their own tail.
+    /// </summary>
+    private void TriggerOuroborousEnding()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Triggers the secret ending if the player becomes too long.
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    private void TriggerSecretEnding()
     {
         throw new NotImplementedException();
     }
