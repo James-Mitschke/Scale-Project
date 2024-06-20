@@ -1,24 +1,21 @@
 using Assets.Scripts.Classes;
 using Assets.Scripts.Services.DataStorageService;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
     private const float cnst_moveSpeed = 10.0f;
     private IDataStorage _dataStorage;
+    private PlayerBodyModel playerBodyModel;
     private float screenSize;
     private float screenRectWidth;
-    private List<GameObject> playerSegments;
     private int playerMaxLength;
-    public List<GameObject> uniquePlayerFishParts;
+    private bool tryToGrowPlayer = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerSegments = new List<GameObject>();
-
         _dataStorage = GameManagerScript.Instance._dataStorage;
 
         if (_dataStorage == null)
@@ -30,12 +27,7 @@ public class PlayerScript : MonoBehaviour
         screenRectWidth = _dataStorage.GetScreenRectWidth();
         playerMaxLength = _dataStorage.GetPlayerMaxLength();
 
-        // Test for instantiating body parts for the fish player, works nicely but will of course need work
-        /*Vector3 spawnPos = this.transform.position - new Vector3(0, this.transform.localScale.y, 0);
-        playerSegments.Add(Instantiate(uniquePlayerFishParts[0], spawnPos, new Quaternion()));
-        var test = playerSegments[0].GetComponent<RelativeJoint2D>();
-        test.connectedBody = this.gameObject.GetComponent<Rigidbody2D>();
-        test.autoConfigureOffset = false;*/
+        InitializePlayer();
     }
 
     // Update is called once per frame
@@ -67,6 +59,20 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    void GrowPlayer(GameObject objectToDestroy)
+    {
+        Destroy(objectToDestroy);
+
+        if (tryToGrowPlayer)
+        {
+            tryToGrowPlayer = playerBodyModel.IncreasePlayerSize();
+        }
+        else
+        {
+            playerBodyModel.UpdateSegmentCount();
+        }
+    }
+
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag.ToLower() == GameTagsEnum.Drag.ToString().ToLower())
@@ -81,17 +87,19 @@ public class PlayerScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.ToLower() == GameTagsEnum.Obstacle.ToString().ToLower())
+        var currentTag = collision.gameObject.tag.ToLower();
+
+        if (currentTag == GameTagsEnum.Obstacle.ToString().ToLower())
         {
             GameManagerScript.Instance.GameOver(EndingTypeEnum.Default);
         }
-        else if (collision.gameObject.tag.ToLower() == GameTagsEnum.Hook.ToString().ToLower())
+        else if (currentTag == GameTagsEnum.Hook.ToString().ToLower())
         {
             GameManagerScript.Instance.GameOver(EndingTypeEnum.Weight);
         }
-        else if (collision.gameObject.tag.ToLower() == GameTagsEnum.Tail.ToString().ToLower())
+        else if (currentTag == GameTagsEnum.Tail.ToString().ToLower())
         {
-            if (playerSegments.Count >= playerMaxLength)
+            if (playerBodyModel.SegmentCount >= playerMaxLength)
             {
                 GameManagerScript.Instance.GameOver(EndingTypeEnum.Secret);
             }
@@ -100,5 +108,28 @@ public class PlayerScript : MonoBehaviour
                 GameManagerScript.Instance.GameOver(EndingTypeEnum.Ouroborous);
             }
         }
+        else if (currentTag == GameTagsEnum.Scale.ToString().ToLower())
+        {
+            GrowPlayer(collision.gameObject);
+        }
+    }
+
+    void InitializePlayer()
+    {
+        var playerBodyObj = _dataStorage.GetUniquePlayerPart(Constants.GameObjects.PlayerBody);
+        var playerBody = Instantiate(playerBodyObj, this.transform.position - new Vector3(0, this.transform.localScale.y, 0), new Quaternion());
+        var bodyJoint = playerBody.GetComponent<RelativeJoint2D>();
+
+        bodyJoint.connectedBody = this.GetComponent<Rigidbody2D>();
+        bodyJoint.autoConfigureOffset = false;
+
+        var playerTailObj = _dataStorage.GetUniquePlayerPart(Constants.GameObjects.PlayerTail);
+        var playerTail = Instantiate(playerTailObj, playerBody.transform.position - new Vector3(0, playerBody.transform.localScale.y, 0), new Quaternion());
+        var tailJoint = playerTail.GetComponent<RelativeJoint2D>();
+
+        tailJoint.connectedBody = playerBody.GetComponent<Rigidbody2D>();
+        tailJoint.autoConfigureOffset = false;
+
+        playerBodyModel = new PlayerBodyModel(playerBody, playerTail, playerBodyObj, playerMaxLength);
     }
 }

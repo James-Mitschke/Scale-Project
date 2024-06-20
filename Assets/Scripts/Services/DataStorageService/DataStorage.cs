@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Services.DataStorageService
+﻿using UnityEngine;
+
+namespace Assets.Scripts.Services.DataStorageService
 {
     public class DataStorage : IDataStorage
     {
@@ -26,6 +28,11 @@
         public int GetPlayerMaxLength()
         {
             return PlayerMaxLength;
+        }
+
+        public GameObject GetUniquePlayerPart(string partName)
+        {
+            return (GameObject)Resources.Load($"objects/{partName}");
         }
     }
 }
