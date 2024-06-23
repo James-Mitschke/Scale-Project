@@ -130,6 +130,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].x
+      value: -0.3375
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].x
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[8].x
+      value: 0.28125
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[12].x
+      value: 0.375
+      objectReference: {fileID: 0}
+    - target: {fileID: -6163032971403580985, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[12].y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 821871322, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: uniquePlayerFishParts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 821871322, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: uniquePlayerFishParts.Array.data[0]
+      value: 
+      objectReference: {fileID: 5649689298516850814, guid: 20604b1f5832b364a9686c4a59bfdfd3, type: 3}
+    - target: {fileID: 821871326, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2097584886320496930, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -178,7 +214,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -4250028942749362745, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
 --- !u!1 &185513121
 GameObject:
@@ -416,6 +454,7 @@ MonoBehaviour:
   maxDelayBetweenSpawningPickups: 20
   minNumberOfObstacles: 1
   maxNumberOfObstacles: 3
+  playerMaxLength: 100
   pickupWeights:
   - 0.73
   - 0.27
@@ -434,60 +473,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &821871319 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7939713597898142161, guid: 9de468dc5f60fd248be175048cb91886, type: 3}
-  m_PrefabInstance: {fileID: 33102712}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &821871322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821871319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 504e35fde555b1545b5ffbb8b45d43bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!70 &821871325
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821871319}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
---- !u!50 &821871326
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 821871319}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &1456102244
 GameObject:
   m_ObjectHideFlags: 0
