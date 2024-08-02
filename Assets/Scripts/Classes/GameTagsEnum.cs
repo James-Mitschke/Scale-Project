@@ -13,6 +13,12 @@
         GameController,
         Scale,
         Tail,
-        Powerup
+        Powerup,
+        Text,
+        Slider,
+        FunFacts,
+        Loader,
+        UIButtons,
+        UILoading,
     }
 }

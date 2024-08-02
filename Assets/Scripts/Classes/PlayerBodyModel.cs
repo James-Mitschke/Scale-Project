@@ -8,8 +8,11 @@ namespace Assets.Scripts.Classes
     {
         public PlayerBodyModel(GameObject startingBody, GameObject playerTail, GameObject objectToSpawn, int maxPlayerSize)
         {
-            PlayerSegments = new List<GameObject>();
-            PlayerSegments.Add(startingBody);
+            PlayerSegments = new List<GameObject>()
+            {
+                startingBody
+            };
+
             TailObject = playerTail;
             ObjectToSpawn = objectToSpawn;
             MaxPlayerSize = maxPlayerSize;
@@ -22,6 +25,10 @@ namespace Assets.Scripts.Classes
         private GameObject TailObject { get; set; }
         private GameObject ObjectToSpawn { get; set; }
 
+        /// <summary>
+        /// Increases the player's visible body length if possible and safe to do so.
+        /// </summary>
+        /// <returns>A <see cref="bool"/> indicating whether or not the player can actually increase in size anymore and therefore if this method should continue to be called.</returns>
         public bool IncreasePlayerSize()
         {
             if (SegmentCountActual < MaxPlayerSize)
@@ -47,7 +54,7 @@ namespace Assets.Scripts.Classes
                 tailJoint.connectedBody = newPart.GetComponent<Rigidbody2D>();
                 tailJoint.autoConfigureOffset = false;
 
-                SegmentCount += 1;
+                UpdateSegmentCount();
 
                 if (SegmentCountActual < MaxPlayerSize)
                 {
@@ -58,6 +65,9 @@ namespace Assets.Scripts.Classes
             return false;
         }
 
+        /// <summary>
+        /// Updates the player's body length for score or record purposes without instantiating new objects.
+        /// </summary>
         public void UpdateSegmentCount()
         {
             SegmentCount += 1;
