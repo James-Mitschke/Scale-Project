@@ -136,8 +136,6 @@ public class MenuManagerScript : MonoBehaviour
         Stopwatch timeTracker = Stopwatch.StartNew();
         AsyncOperation sceneLoad = SceneManager.LoadSceneAsync("MainGameScene");
 
-        yield return new WaitForSeconds(5);
-
         while (!sceneLoad.isDone && timeTracker.Elapsed < maxLoadTimeSeconds)
         {
             if (sceneLoad.progress > gameLoadProgress)
